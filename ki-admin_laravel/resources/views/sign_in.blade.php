@@ -29,7 +29,8 @@
                 </div>
                 <div class="col-lg-5 form-content-box">
                     <div class="form-container ">
-                        <form class="app-form">
+                        <form class="app-form" method="POST" action="{{ route('login.submit') }}">
+                            @csrf
                             <div class="row">
                                 <div class="col-12">
                                     <div class="mb-5 text-center text-lg-start">
@@ -40,16 +41,19 @@
                                 </div>
                                 <div class="col-12">
                                     <div class="form-floating mb-3">
-                                        <input class="form-control" id="UserName" placeholder="Email Username"
-                                               type="text">
+                                        <input class="form-control" id="UserName" name="username" placeholder="Email Username"
+                                               type="text" value="{{ old('username') }}">
                                         <label for="UserName">Username</label>
+                                        @error('username')
+                                            <div class="text-danger mt-1">{{ $message }}</div>
+                                        @enderror
                                     </div>
                                 </div>
                                 <div class="col-12">
 
                                     <div class="form-floating mb-3">
-                                        <input class="form-control" id="floatingInput" placeholder="Email Username"
-                                               type="text">
+                                        <input class="form-control" id="floatingInput" name="password" placeholder="Password"
+                                               type="password">
                                         <label for="floatingInput">Password</label>
 
                                     </div>
@@ -68,7 +72,7 @@
                                     </div>
                                 </div>
                                 <div class="col-12 mt-3">
-                                    <a class="btn btn-primary btn-lg w-100" href="{{ route('index') }}" role="button">Sign In</a>
+                                    <button class="btn btn-primary btn-lg w-100" type="submit">Sign In</button>
                                 </div>
                                 <div class="col-12 mt-4">
                                     <div class="text-center text-lg-start f-w-500">
@@ -108,7 +112,19 @@
     <!-- Bootstrap js-->
     <script src="{{asset('assets/vendor/bootstrap/bootstrap.bundle.min.js')}}"></script>
 
-
+    <script>
+        // Debug: Check if form is being submitted
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.querySelector('.app-form');
+            if (form) {
+                form.addEventListener('submit', function(e) {
+                    console.log('Form submitted!');
+                    console.log('Form data:', new FormData(form));
+                    // Removed alert to avoid interruption
+                });
+            }
+        });
+    </script>
 
 </body>
 

@@ -358,6 +358,7 @@
                     <option value="Pendiente">Pendiente</option>
                 </select>
             </div>
+            @if(session('role') == 'admin')
             <div class="user-filter">
                 <select id="userFilter" class="form-select">
                     <option value="">Usuario</option>
@@ -366,6 +367,7 @@
                     <option value="Luis Lopez">Luis Lopez</option>
                 </select>
             </div>
+            @endif
             <button type="button" class="clear-filters" id="clearFilters">
                 <i class="ti ti-filter-off"></i>
                 Limpiar filtros
@@ -381,7 +383,11 @@
                     <div class="card-header d-flex justify-content-between align-items-center">
                         <div>
                             <h5>Lista de Recibos</h5>
-                            <p>Gestión completa de recibos del sistema.</p>
+                            @if(session('role') == 'admin')
+                                <p>Gestión completa de recibos del sistema.</p>
+                            @else
+                                <p>Mis recibos de nómina.</p>
+                            @endif
                         </div>
                     </div>
                     <div class="card-body p-0">
@@ -398,51 +404,101 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr>
-                                    <td>10</td>
-                                    <td>12/02/2025</td>
-                                    <td>Ana Gomez</td>
-                                    <td>RANOVS2025-03-AED</td>
-                                    <td><span class="badge text-light-success">Visto</span></td>
-                                    <td>
-                                        <button type="button" class="btn btn-light-primary icon-btn b-r-4 view-btn">
-                                            <i class="ti ti-eye"></i>
-                                        </button>
-                                        <button type="button" class="btn btn-primary download-btn">
-                                            <i class="ti ti-download"></i>
-                                        </button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>10</td>
-                                    <td>12/02/2025</td>
-                                    <td>Juan Perez</td>
-                                    <td>RE10MAE2025-03-ADD</td>
-                                    <td><span class="badge text-light-danger">Descargado</span></td>
-                                    <td>
-                                        <button type="button" class="btn btn-light-primary icon-btn b-r-4 view-btn">
-                                            <i class="ti ti-eye"></i>
-                                        </button>
-                                        <button type="button" class="btn btn-primary download-btn">
-                                            <i class="ti ti-download"></i>
-                                        </button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>08</td>
-                                    <td>12/02/2025</td>
-                                    <td>Luis Lopez</td>
-                                    <td>RO202FC2025-03-SED</td>
-                                    <td><span class="badge text-light-warning">Pendiente</span></td>
-                                    <td>
-                                        <button type="button" class="btn btn-light-primary icon-btn b-r-4 view-btn">
-                                            <i class="ti ti-eye"></i>
-                                        </button>
-                                        <button type="button" class="btn btn-primary download-btn">
-                                            <i class="ti ti-download"></i>
-                                        </button>
-                                    </td>
-                                </tr>
+                                @if(session('role') == 'admin')
+                                    <!-- Datos para Admin - Todos los recibos -->
+                                    <tr>
+                                        <td>10</td>
+                                        <td>12/02/2025</td>
+                                        <td>Ana Gomez</td>
+                                        <td>RANOVS2025-03-AED</td>
+                                        <td><span class="badge text-light-success">Visto</span></td>
+                                        <td>
+                                            <button type="button" class="btn btn-light-primary icon-btn b-r-4 view-btn">
+                                                <i class="ti ti-eye"></i>
+                                            </button>
+                                            <button type="button" class="btn btn-primary download-btn">
+                                                <i class="ti ti-download"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>10</td>
+                                        <td>12/02/2025</td>
+                                        <td>Juan Perez</td>
+                                        <td>RE10MAE2025-03-ADD</td>
+                                        <td><span class="badge text-light-danger">Descargado</span></td>
+                                        <td>
+                                            <button type="button" class="btn btn-light-primary icon-btn b-r-4 view-btn">
+                                                <i class="ti ti-eye"></i>
+                                            </button>
+                                            <button type="button" class="btn btn-primary download-btn">
+                                                <i class="ti ti-download"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>08</td>
+                                        <td>12/02/2025</td>
+                                        <td>Luis Lopez</td>
+                                        <td>RO202FC2025-03-SED</td>
+                                        <td><span class="badge text-light-warning">Pendiente</span></td>
+                                        <td>
+                                            <button type="button" class="btn btn-light-primary icon-btn b-r-4 view-btn">
+                                                <i class="ti ti-eye"></i>
+                                            </button>
+                                            <button type="button" class="btn btn-primary download-btn">
+                                                <i class="ti ti-download"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                @else
+                                    <!-- Datos para Empleado - Solo sus recibos -->
+                                    <tr>
+                                        <td>15</td>
+                                        <td>15/02/2025</td>
+                                        <td>Empleado</td>
+                                        <td>EMP0012025-02-001</td>
+                                        <td><span class="badge text-light-success">Visto</span></td>
+                                        <td>
+                                            <button type="button" class="btn btn-light-primary icon-btn b-r-4 view-btn">
+                                                <i class="ti ti-eye"></i>
+                                            </button>
+                                            <button type="button" class="btn btn-primary download-btn">
+                                                <i class="ti ti-download"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>16</td>
+                                        <td>20/02/2025</td>
+                                        <td>Empleado</td>
+                                        <td>EMP0012025-02-002</td>
+                                        <td><span class="badge text-light-warning">Pendiente</span></td>
+                                        <td>
+                                            <button type="button" class="btn btn-light-primary icon-btn b-r-4 view-btn">
+                                                <i class="ti ti-eye"></i>
+                                            </button>
+                                            <button type="button" class="btn btn-primary download-btn">
+                                                <i class="ti ti-download"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>17</td>
+                                        <td>25/02/2025</td>
+                                        <td>Empleado</td>
+                                        <td>EMP0012025-02-003</td>
+                                        <td><span class="badge text-light-danger">Descargado</span></td>
+                                        <td>
+                                            <button type="button" class="btn btn-light-primary icon-btn b-r-4 view-btn">
+                                                <i class="ti ti-eye"></i>
+                                            </button>
+                                            <button type="button" class="btn btn-primary download-btn">
+                                                <i class="ti ti-download"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                @endif
                                 </tbody>
                             </table>
                         </div>
