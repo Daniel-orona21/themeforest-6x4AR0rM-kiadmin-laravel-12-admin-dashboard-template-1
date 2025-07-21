@@ -167,7 +167,7 @@ $(function () {
         
         // Extract route name from href
         const linkHref = href.split('/').pop() || href;
-        
+
         // Check if current page matches this link
         if (current === linkHref || current === href || location.pathname === href) {
             const $parentLi = $this.parent('li');
@@ -175,15 +175,15 @@ $(function () {
                 $parentLi.addClass('active');
                 $this.attr('aria-expanded', 'true');
             } else {
-                const $parentUl = $this.parent().parent().parent();
-                const $grandParentUl = $parentUl.parent().parent().parent();
+            const $parentUl = $this.parent().parent().parent();
+            const $grandParentUl = $parentUl.parent().parent().parent();
 
-                if ($grandParentUl.hasClass("another-level")) {
-                    $grandParentUl.closest('li').children().addClass('show').attr("aria-expanded", "true");
-                }
+            if ($grandParentUl.hasClass("another-level")) {
+                $grandParentUl.closest('li').children().addClass('show').attr("aria-expanded", "true");
+            }
 
-                $parentUl.children().addClass('show').attr("aria-expanded", "true");
-                $parentLi.addClass('active');
+            $parentUl.children().addClass('show').attr("aria-expanded", "true");
+            $parentLi.addClass('active');
             }
         }
     });

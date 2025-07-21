@@ -198,3 +198,4 @@
     <script src="{{asset('assets/vendor/datatable/jquery.dataTables.min.js')}}"></script>
     <script src="{{asset('assets/js/data_table.js')}}"></script>
 @endsection
+ 

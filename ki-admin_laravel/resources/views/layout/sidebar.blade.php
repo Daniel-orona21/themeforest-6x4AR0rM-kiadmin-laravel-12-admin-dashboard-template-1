@@ -362,7 +362,7 @@
             <li class="no-sub">
                 <a href="{{route('usuarios')}}">
                     <svg stroke="currentColor" stroke-width="1.5">
-                        <use xlink:href="../assets/svg/_sprite.svg#users"></use>
+                        <use xlink:href="../assets/svg/_sprite.svg#queue-list"></use>
                     </svg>
                     Usuarios
                 </a>
@@ -370,7 +370,7 @@
             <li class="no-sub">
                 <a href="{{route('recibos')}}">
                     <svg stroke="currentColor" stroke-width="1.5">
-                        <use xlink:href="../assets/svg/_sprite.svg#receipt"></use>
+                        <use xlink:href="../assets/svg/_sprite.svg#document"></use>
                     </svg>
                     Recibos
                 </a>
@@ -378,7 +378,7 @@
             <li class="no-sub">
                 <a href="{{route('reportes')}}">
                     <svg stroke="currentColor" stroke-width="1.5">
-                        <use xlink:href="../assets/svg/_sprite.svg#chart-bar"></use>
+                        <use xlink:href="../assets/svg/_sprite.svg#chart"></use>
                     </svg>
                     Reportes
                 </a>
