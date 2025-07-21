@@ -1,0 +1,19 @@
+/* Custom styles for top-level navigation items - only for semi-nav mode */
+.semi-nav nav .app-nav .main-nav > li.no-sub > a {
+    font-size: 0 !important;
+    text-align: center;
+}
+
+.semi-nav nav .app-nav .main-nav > li.no-sub > a svg {
+    margin: 0 auto;
+}
+
+/* Hover state for semi-nav mode */
+.semi-nav:hover nav .app-nav .main-nav > li.no-sub > a {
+    font-size: 1.125rem !important;
+    text-align: left;
+}
+
+.semi-nav:hover nav .app-nav .main-nav > li.no-sub > a svg {
+    margin: 0 0.25rem 0 0;
+} 
