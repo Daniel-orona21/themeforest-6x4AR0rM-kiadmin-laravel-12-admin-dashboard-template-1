@@ -565,13 +565,11 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script>
         $(document).ready(function() {
-            // Inicializar DataTable
             var table = $('#recibosTable').DataTable({
-                "dom": 't<"bottom"ip>', // Solo mostrar tabla y paginación
+                "dom": '<"top"l>t<"bottom"ip>',
                 "language": {
-                    "lengthMenu": "Mostrar _MENU_ registros por página",
-                    "zeroRecords": "No se encontraron resultados",
-                    "info": "Mostrando página _PAGE_ de _PAGES_",
+                    "lengthMenu": "Mostrar _MENU_ resultados",
+                    "info": "Mostrando _START_ a _END_ de _TOTAL_ resultados",
                     "infoEmpty": "No hay registros disponibles",
                     "infoFiltered": "(filtrado de _MAX_ registros totales)",
                     "paginate": {
@@ -582,6 +580,10 @@
                     }
                 }
             });
+
+            // Mover los filtros personalizados al lado del lengthMenu
+            $('.dataTables_length').addClass('d-flex align-items-center gap-3');
+            $('#recibosTable_wrapper .filters-container').detach().appendTo('.dataTables_length');
 
             // Búsqueda personalizada
             $('#searchInput').on('keyup', function() {

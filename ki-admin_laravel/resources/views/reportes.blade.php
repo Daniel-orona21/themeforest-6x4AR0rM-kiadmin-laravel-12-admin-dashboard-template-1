@@ -20,16 +20,11 @@
             align-items: center;
             gap: 8px;
         }
-        .filter-item select, .filter-item input {
+        .filter-item select {
             padding: 6px 12px;
             border: 1px solid #ddd;
             border-radius: 4px;
             background-color: white;
-        }
-        .filter-item input[type="text"] {
-             min-width: 200px;
-        }
-        .filter-item select {
             min-width: 150px;
         }
         .date-group {
@@ -38,6 +33,10 @@
         .date-group input {
             width: 130px;
             cursor: pointer;
+            padding: 6px 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            background-color: white;
             padding-right: 30px;
         }
         .date-group i {
@@ -61,6 +60,10 @@
         }
         .app-datatable-default {
             box-shadow: none !important;
+        }
+        .download-btn {
+            padding: 2px 8px;
+            font-size: 12px;
         }
     </style>
 @endsection
@@ -87,9 +90,6 @@
 
         <!-- Filters start -->
         <div class="filters-container">
-            <div class="filter-item">
-                <input type="text" id="searchInput" class="form-control" placeholder="Buscar...">
-            </div>
             <div class="filter-item date-filter">
                 <div class="date-group">
                     <input type="text" id="startDate" class="form-control" placeholder="Fecha inicial" readonly>
@@ -101,19 +101,19 @@
                 </div>
             </div>
             <div class="filter-item">
-                <select id="typeFilter" class="form-select">
-                    <option value="">Tipo de Reporte</option>
-                    <option value="Ventas">Ventas</option>
-                    <option value="Inventario">Inventario</option>
-                    <option value="Financiero">Financiero</option>
+                <select id="userFilter" class="form-select">
+                    <option value="">Usuario</option>
+                    <option value="Luis Gomez">Luis Gomez</option>
+                    <option value="Juan Perez">Juan Perez</option>
+                    <option value="Luis Lopez">Luis Lopez</option>
                 </select>
             </div>
             <div class="filter-item">
-                <select id="userFilter" class="form-select">
-                    <option value="">Generado por</option>
-                    <option value="Ana Gomez">Ana Gomez</option>
-                    <option value="Juan Perez">Juan Perez</option>
-                    <option value="Luis Lopez">Luis Lopez</option>
+                <select id="statusFilter" class="form-select">
+                    <option value="">Estatus</option>
+                    <option value="Visto">Visto</option>
+                    <option value="Descargado">Descargado</option>
+                    <option value="Pendiente">Pendiente</option>
                 </select>
             </div>
             <button type="button" class="clear-filters" id="clearFilters">
@@ -127,9 +127,16 @@
         <div class="row">
             <div class="col-12">
                 <div class="card">
-                    <div class="card-header">
-                        <h5>Lista de Reportes</h5>
-                        <p>Gestión y descarga de reportes del sistema.</p>
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <div>
+                            <h5>Lista de Reportes</h5>
+                            <p>Gestión y descarga de reportes del sistema.</p>
+                        </div>
+                        <div>
+                            <button type="button" class="btn btn-primary" id="exportExcelBtn">
+                                <i class="ti ti-download"></i> Descargar XLS
+                            </button>
+                        </div>
                     </div>
                     <div class="card-body p-0">
                         <div class="app-datatable-default overflow-auto">
@@ -137,49 +144,33 @@
                                 <thead>
                                 <tr>
                                     <th>ID</th>
+                                    <th>Fecha</th>
+                                    <th>Usuario</th>
                                     <th>Nombre del Reporte</th>
-                                    <th>Fecha de Generación</th>
-                                    <th>Generado Por</th>
-                                    <th>Tipo</th>
-                                    <th>Acciones</th>
+                                    <th>Estatus</th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 <tr>
-                                    <td>REP-001</td>
-                                    <td>Reporte de Ventas Mensual</td>
-                                    <td>15/02/2025</td>
-                                    <td>Ana Gomez</td>
-                                    <td><span class="badge text-light-primary">Ventas</span></td>
-                                    <td>
-                                        <button type="button" class="btn btn-primary icon-btn b-r-4 download-btn">
-                                            <i class="ti ti-download"></i>
-                                        </button>
-                                    </td>
+                                    <td>11</td>
+                                    <td>12/02/2025</td>
+                                    <td>Luis Gomez</td>
+                                    <td>RA100VS2025-03-AED</td>
+                                    <td><span class="badge text-light-success">Visto</span></td>
                                 </tr>
                                 <tr>
-                                    <td>REP-002</td>
-                                    <td>Reporte de Inventario Semanal</td>
-                                    <td>14/02/2025</td>
+                                    <td>10</td>
+                                    <td>12/02/2025</td>
                                     <td>Juan Perez</td>
-                                    <td><span class="badge text-light-info">Inventario</span></td>
-                                    <td>
-                                        <button type="button" class="btn btn-primary icon-btn b-r-4 download-btn">
-                                            <i class="ti ti-download"></i>
-                                        </button>
-                                    </td>
+                                    <td>RE101AE2025-03-ADD</td>
+                                    <td><span class="badge text-light-danger">Descargado</span></td>
                                 </tr>
                                 <tr>
-                                    <td>REP-003</td>
-                                    <td>Cierre Financiero Anual</td>
+                                    <td>09</td>
                                     <td>12/02/2025</td>
                                     <td>Luis Lopez</td>
-                                    <td><span class="badge text-light-success">Financiero</span></td>
-                                    <td>
-                                        <button type="button" class="btn btn-primary icon-btn b-r-4 download-btn">
-                                            <i class="ti ti-download"></i>
-                                        </button>
-                                    </td>
+                                    <td>RO202FC2025-03-SED</td>
+                                    <td><span class="badge text-light-warning">Pendiente</span></td>
                                 </tr>
                                 </tbody>
                             </table>
@@ -195,14 +186,20 @@
 @section('script')
     <!-- Data Table js-->
     <script src="{{asset('assets/vendor/datatable/jquery.dataTables.min.js')}}"></script>
+    <!-- DataTables Buttons JS -->
+    <script src="https://cdn.datatables.net/buttons/2.2.3/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.2.3/js/buttons.html5.min.js"></script>
+    
     <!-- flatpickr js-->
     <script src="{{asset('assets/vendor/datepikar/flatpickr.js')}}"></script>
     <script>
         $(document).ready(function() {
             var table = $('#reportesTable').DataTable({
-                "dom": 't<"bottom"ip>',
+                "dom": '<"top"l>t<"bottom"ip>',
                 "language": {
-                    "info": "Mostrando página _PAGE_ de _PAGES_",
+                    "lengthMenu": "Mostrar _MENU_ resultados",
+                    "info": "Mostrando _START_ a _END_ de _TOTAL_ resultados",
                     "infoEmpty": "No hay registros disponibles",
                     "infoFiltered": "(filtrado de _MAX_ registros totales)",
                     "paginate": {
@@ -211,13 +208,23 @@
                         "next": "Siguiente",
                         "previous": "Anterior"
                     }
-                }
+                },
+                "buttons": [
+                    {
+                        extend: 'excelHtml5',
+                        text: 'Excel',
+                        title: 'Reporte de Sistema',
+                        exportOptions: {
+                            columns: [ 0, 1, 2, 3, 4 ] // Exporta todas las columnas visibles
+                        }
+                    }
+                ]
             });
 
-            $('#searchInput').on('keyup', function() {
-                table.search(this.value).draw();
-            });
-
+            // Mover los filtros personalizados al lado del lengthMenu
+            $('.dataTables_length').addClass('d-flex align-items-center gap-3');
+            $('#reportesTable_wrapper .filters-container').detach().appendTo('.dataTables_length');
+            
             var startDatePicker = flatpickr("#startDate", {
                 dateFormat: "d/m/Y",
                 locale: "es",
@@ -236,7 +243,7 @@
                 
                 if (!startDate && !endDate) return true;
                 
-                var dateParts = data[2].split('/');
+                var dateParts = data[1].split('/'); // Columna de Fecha es ahora el índice 1
                 var rowDate = new Date(dateParts[2], dateParts[1] - 1, dateParts[0]);
                 
                 if (startDate && rowDate < startDate) return false;
@@ -245,24 +252,29 @@
                 return true;
             });
 
-            $('#typeFilter').on('change', function() {
-                table.column(4).search($(this).val()).draw();
+            $('#userFilter').on('change', function() {
+                table.column(2).search($(this).val()).draw(); // Columna de Usuario es ahora el índice 2
             });
 
-            $('#userFilter').on('change', function() {
-                table.column(3).search($(this).val()).draw();
+            $('#statusFilter').on('change', function() {
+                table.column(4).search($(this).val()).draw(); // Columna de Estatus es ahora el índice 4
             });
 
             $('#clearFilters').on('click', function() {
-                $('#searchInput').val('');
                 startDatePicker.clear();
                 endDatePicker.clear();
-                $('#typeFilter, #userFilter').val('');
-                table.search('').columns().search('').draw();
+                $('#userFilter, #statusFilter').val('');
+                table.columns().search('').draw();
+            });
+
+            // Trigger para el botón de exportación personalizado
+            $('#exportExcelBtn').on('click', function() {
+                // El botón de DataTables se crea pero está oculto. Lo disparamos con este clic.
+                table.button('.buttons-excel').trigger();
             });
 
             $(document).on('click', '.download-btn', function() {
-                var reportName = $(this).closest('tr').find('td').eq(1).text();
+                var reportName = $(this).closest('tr').find('td').eq(3).text(); // Columna de Nombre es ahora el índice 3
                 alert('Descargando: ' + reportName);
             });
         });

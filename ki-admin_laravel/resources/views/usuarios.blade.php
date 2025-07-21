@@ -264,17 +264,17 @@
 @section('script')
     <!-- Data Table js-->
     <script src="{{asset('assets/vendor/datatable/jquery.dataTables.min.js')}}"></script>
+    <!-- flatpickr js-->
+    <script src="{{asset('assets/vendor/datepikar/flatpickr.js')}}"></script>
     <script>
         $(document).ready(function() {
-            // Inicializar DataTable
             var table = $('#usuariosTable').DataTable({
+                "dom": '<"top"l>t<"bottom"ip>', // l: lengthMenu, i: info, p: pagination
                 "language": {
-                    "lengthMenu": "Mostrar _MENU_ registros por página",
-                    "zeroRecords": "No se encontraron resultados",
-                    "info": "Mostrando página _PAGE_ de _PAGES_",
+                    "lengthMenu": "Mostrar _MENU_ resultados",
+                    "info": "Mostrando _START_ a _END_ de _TOTAL_ resultados",
                     "infoEmpty": "No hay registros disponibles",
                     "infoFiltered": "(filtrado de _MAX_ registros totales)",
-                    "search": "Buscar:",
                     "paginate": {
                         "first": "Primero",
                         "last": "Último",
@@ -282,8 +282,12 @@
                         "previous": "Anterior"
                     }
                 },
-                "destroy": true // Esto permite reinicializar la tabla
+                "destroy": true
             });
+
+            // Mover los filtros personalizados al lado del lengthMenu
+            $('.dataTables_length').addClass('d-flex align-items-center');
+            $('#usuariosTable_wrapper .filters-container').detach().appendTo('.dataTables_length');
 
             // Agregar el filtro de estado al DOM
             $('.dataTables_filter').append(`
