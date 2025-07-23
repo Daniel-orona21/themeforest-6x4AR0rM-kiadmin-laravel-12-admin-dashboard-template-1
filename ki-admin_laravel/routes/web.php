@@ -58,8 +58,13 @@ Route::post('/change-expired-password', function () {
         return redirect()->back()->with('error', 'Las contraseñas no coinciden.');
     }
     
-    // Simular verificación de contraseña actual (en un caso real, verificaría contra la base de datos)
+    // Simular verificación de contraseña actual
     if ($currentPassword === 'contraseñavencida') {
+        // Validación de formato de contraseña
+        if (!preg_match('/^(?=.*[A-Z])(?=.*\d).{8,}$/', $newPassword)) {
+            return redirect()->back()->with('error', 'La nueva contraseña debe ser de al menos 8 caracteres, incluyendo una mayúscula y un número');
+        }
+
         // Simular cambio exitoso
         return redirect()->back()->with('success', 'Contraseña actualizada exitosamente.');
     } else {
