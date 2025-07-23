@@ -22,9 +22,10 @@
         }
         .filter-item select {
             padding: 6px 12px;
-            border: 1px solid #ddd;
+            border: 1px solid rgba(var(--secondary), .4);
             border-radius: 4px;
-            background-color: white;
+            background-color: var(--bs-form-control-bg);
+            color: var(--bs-body-color);
             min-width: 150px;
         }
         .date-group {
@@ -34,9 +35,10 @@
             width: 130px;
             cursor: pointer;
             padding: 6px 12px;
-            border: 1px solid #ddd;
+            border: 1px solid rgba(var(--secondary), .4);
             border-radius: 4px;
-            background-color: white;
+            background-color: var(--bs-form-control-bg);
+            color: var(--bs-body-color);
             padding-right: 30px;
         }
         .date-group i {
@@ -45,18 +47,23 @@
             top: 50%;
             transform: translateY(-50%);
             pointer-events: none;
-            color: #6c757d;
+            color: rgba(var(--secondary), 1);
         }
         .clear-filters {
             padding: 6px 12px;
-            border: 1px solid #ddd;
+            border: 1px solid rgba(var(--secondary), .4);
             border-radius: 4px;
-            background-color: #f8f9fa;
-            color: #6c757d;
+            background-color: var(--bs-tertiary-bg);
+            color: var(--bs-body-color);
             cursor: pointer;
             display: flex;
             align-items: center;
             gap: 5px;
+            transition: all 0.3s ease;
+        }
+        .clear-filters:hover {
+            background-color: var(--bs-secondary-bg);
+            color: var(--bs-body-color);
         }
         .app-datatable-default {
             box-shadow: none !important;
@@ -64,6 +71,28 @@
         .download-btn {
             padding: 2px 8px;
             font-size: 12px;
+        }
+        
+        /* Estilos específicos para modo oscuro */
+        body.dark .filter-item select,
+        body.dark .date-group input {
+            background-color: rgba(var(--white), 1) !important;
+            color: rgba(var(--dark), 1) !important;
+            border-color: rgba(var(--secondary), .4) !important;
+        }
+        
+        body.dark .clear-filters {
+            background-color: rgba(var(--white), .1) !important;
+            color: rgba(var(--dark), 1) !important;
+            border-color: rgba(var(--secondary), .4) !important;
+        }
+        
+        body.dark .clear-filters:hover {
+            background-color: rgba(var(--white), .2) !important;
+        }
+        
+        body.dark .date-group i {
+            color: rgba(var(--dark), .6) !important;
         }
     </style>
 @endsection

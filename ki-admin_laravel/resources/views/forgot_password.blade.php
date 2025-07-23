@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 
-@section('title', 'Sign In')
+@section('title', 'Forgot Password')
 @include('layout.head')
 
 @include('layout.css')
@@ -29,55 +29,41 @@
                 </div>
                 <div class="col-lg-5 form-content-box">
                     <div class="form-container ">
-                        <form class="app-form" method="POST" action="{{ route('login.submit') }}">
+                        <form class="app-form" method="POST" action="{{ route('password.email') }}">
                             @csrf
                             <div class="row">
                                 <div class="col-12">
                                     <div class="mb-5 text-center text-lg-start">
-                                        <h2 class="text-white f-w-600">¡Bienvenido a <span class="text-dark">ki-admin!</span> </h2>
-                                        <p class="f-s-16 mt-2">Inicia sesión con los datos que ingresaste durante tu
-                                            registro</p>
+                                        <h2 class="text-white f-w-600">¿Olvidaste tu <span class="text-dark">Contraseña?</span> </h2>
+                                        <p class="f-s-16 mt-2">Ingresa tu dirección de email y te enviaremos un enlace para restablecer tu contraseña</p>
                                     </div>
                                 </div>
+                                
+                                @if(session('success'))
+                                    <div class="col-12">
+                                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                            {{ session('success') }}
+                                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                        </div>
+                                    </div>
+                                @endif
                                 <div class="col-12">
                                     <div class="form-floating mb-3">
-                                        <input class="form-control" id="UserName" name="username" placeholder="Usuario o Email"
-                                               type="text" value="{{ old('username') }}">
-                                        <label for="UserName">Usuario</label>
-                                        @error('username')
+                                        <input class="form-control" id="email" name="email" placeholder="Ingresa tu email"
+                                               type="email" value="{{ old('email') }}" required>
+                                        <label for="email">Dirección de Email</label>
+                                        @error('email')
                                             <div class="text-danger mt-1">{{ $message }}</div>
                                         @enderror
                                     </div>
                                 </div>
-                                <div class="col-12">
-
-                                    <div class="form-floating mb-3">
-                                        <input class="form-control" id="floatingInput" name="password" placeholder="Contraseña"
-                                               type="password">
-                                        <label for="floatingInput">Contraseña</label>
-
-                                    </div>
-                                    <div class="text-end ">
-                                        <a class="text-dark f-w-500 text-decoration-underline" href="{{ route('password.request') }}">¿Olvidaste tu contraseña?</a>
-                                    </div>
-                                </div>
-                                <div class="col-12">
-                                    <div class="form-check d-flex align-items-center gap-2 mb-3">
-                                        <input class="form-check-input w-25 h-25" id="checkDefault" type="checkbox"
-                                               value="">
-                                        <label class="form-check-label text-white mt-2 f-s-16 text-dark"
-                                               for="checkDefault">
-                                            Recordarme
-                                        </label>
-                                    </div>
-                                </div>
                                 <div class="col-12 mt-3">
-                                    <button class="btn btn-primary btn-lg w-100" type="submit">Iniciar Sesión</button>
+                                    <button class="btn btn-primary btn-lg w-100" type="submit">Enviar Enlace de Restablecimiento</button>
                                 </div>
                                 <div class="col-12 mt-4">
                                     <div class="text-center text-lg-start f-w-500">
-                                        ¿No tienes una cuenta aún?
-                                        <a class="text-white-800 text-decoration-underline" href="{{route('sign_up')}}">Regístrate</a>
+                                        ¿Recuerdas tu contraseña?
+                                        <a class="text-white-800 text-decoration-underline" href="{{route('login')}}">Iniciar Sesión</a>
                                     </div>
                                 </div>
 
@@ -118,9 +104,8 @@
             const form = document.querySelector('.app-form');
             if (form) {
                 form.addEventListener('submit', function(e) {
-                    console.log('Form submitted!');
+                    console.log('Forgot password form submitted!');
                     console.log('Form data:', new FormData(form));
-                    // Removed alert to avoid interruption
                 });
             }
         });
@@ -128,4 +113,4 @@
 
 </body>
 
-</html>
+</html> 

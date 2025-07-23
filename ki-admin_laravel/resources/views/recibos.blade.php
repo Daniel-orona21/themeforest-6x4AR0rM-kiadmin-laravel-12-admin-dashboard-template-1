@@ -25,9 +25,10 @@
         }
         .status-filter select, .user-filter select {
             padding: 6px 12px;
-            border: 1px solid #ddd;
+            border: 1px solid rgba(var(--secondary), .4);
             border-radius: 4px;
-            background-color: white;
+            background-color: var(--bs-form-control-bg);
+            color: var(--bs-body-color);
             min-width: 150px;
         }
         .date-filter {
@@ -38,9 +39,10 @@
         .date-filter input {
             padding: 6px 12px;
             padding-right: 30px;
-            border: 1px solid #ddd;
+            border: 1px solid rgba(var(--secondary), .4);
             border-radius: 4px;
-            background-color: white;
+            background-color: var(--bs-form-control-bg);
+            color: var(--bs-body-color);
             width: 130px;
             cursor: pointer;
         }
@@ -50,21 +52,22 @@
             top: 50%;
             transform: translateY(-50%);
             pointer-events: none;
-            color: #6c757d;
+            color: rgba(var(--secondary), 1);
         }
         .search-filter input {
             padding: 6px 12px;
-            border: 1px solid #ddd;
+            border: 1px solid rgba(var(--secondary), .4);
             border-radius: 4px;
-            background-color: white;
+            background-color: var(--bs-form-control-bg);
+            color: var(--bs-body-color);
             min-width: 200px;
         }
         .clear-filters {
             padding: 6px 12px;
-            border: 1px solid #ddd;
+            border: 1px solid rgba(var(--secondary), .4);
             border-radius: 4px;
-            background-color: #f8f9fa;
-            color: #6c757d;
+            background-color: var(--bs-tertiary-bg);
+            color: var(--bs-body-color);
             cursor: pointer;
             display: flex;
             align-items: center;
@@ -72,8 +75,8 @@
             transition: all 0.3s ease;
         }
         .clear-filters:hover {
-            background-color: #e9ecef;
-            color: #495057;
+            background-color: var(--bs-secondary-bg);
+            color: var(--bs-body-color);
         }
         .clear-filters i {
             font-size: 14px;
@@ -97,7 +100,32 @@
             position: relative;
         }
         .flatpickr-input {
-            background-color: white !important;
+            background-color: var(--bs-form-control-bg) !important;
+            color: var(--bs-body-color) !important;
+        }
+        
+        /* Estilos específicos para modo oscuro */
+        body.dark .status-filter select,
+        body.dark .user-filter select,
+        body.dark .date-filter input,
+        body.dark .search-filter input {
+            background-color: rgba(var(--white), 1) !important;
+            color: rgba(var(--dark), 1) !important;
+            border-color: rgba(var(--secondary), .4) !important;
+        }
+        
+        body.dark .clear-filters {
+            background-color: rgba(var(--white), .1) !important;
+            color: rgba(var(--dark), 1) !important;
+            border-color: rgba(var(--secondary), .4) !important;
+        }
+        
+        body.dark .clear-filters:hover {
+            background-color: rgba(var(--white), .2) !important;
+        }
+        
+        body.dark .date-filter i {
+            color: rgba(var(--dark), .6) !important;
         }
 
         /* Estilos para el recibo */

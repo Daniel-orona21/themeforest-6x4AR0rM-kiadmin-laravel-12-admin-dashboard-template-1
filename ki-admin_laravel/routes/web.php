@@ -22,6 +22,13 @@ Route::get('/', function () {
 Route::get('/sign_in', [AuthController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [AuthController::class, 'login'])->name('login.submit');
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+Route::get('/forgot-password', function () {
+    return view('forgot_password');
+})->name('password.request');
+Route::post('/forgot-password', function () {
+    // Simular envío de email de recuperación
+    return redirect()->back()->with('success', 'Si existe una cuenta con esa dirección de email, hemos enviado un enlace para restablecer la contraseña.');
+})->name('password.email');
 
 
 // --- Rutas Protegidas (Dashboard y otras páginas) ---
