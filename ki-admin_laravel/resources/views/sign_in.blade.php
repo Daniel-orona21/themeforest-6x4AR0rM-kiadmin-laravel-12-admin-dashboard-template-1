@@ -82,7 +82,7 @@
                                 </div>
 
                                 <div class="app-divider-v light justify-content-center py-lg-5 py-3">
-                                    <p>OR</p>
+                                    <p>O</p>
                                 </div>
 
                                 <div class="col-12">
@@ -108,23 +108,63 @@
     </div>
 </div>
 
+<!-- Modal de Contraseña Vencida -->
+<div class="modal fade" id="expiredPasswordModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header border-0">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-center pb-4">
+                <div class="mb-4">
+                    <div class="d-inline-flex align-items-center justify-content-center bg-warning rounded-circle" style="width: 80px; height: 80px;">
+                        <i class="ti ti-alert-triangle text-white" style="font-size: 2.5rem;"></i>
+                    </div>
+                </div>
+                <h4 class="mb-3">Contraseña vencida</h4>
+                <p class="text-muted mb-4">Acorde a las políticas de la empresa, debe cambiar su contraseña para poder acceder al sistema.</p>
+                <div class="d-flex gap-2 justify-content-center">
+                    <a href="{{ route('password.change.expired.form') }}" class="btn btn-warning btn-lg">
+                        Cambiar contraseña
+                    </a>
+                    <button type="button" class="btn btn-secondary btn-lg" data-bs-dismiss="modal">
+                        Cerrar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
-    <!-- Bootstrap js-->
-    <script src="{{asset('assets/vendor/bootstrap/bootstrap.bundle.min.js')}}"></script>
+<!-- Bootstrap js-->
+<script src="{{asset('assets/vendor/bootstrap/bootstrap.bundle.min.js')}}"></script>
 
-    <script>
-        // Debug: Check if form is being submitted
-        document.addEventListener('DOMContentLoaded', function() {
-            const form = document.querySelector('.app-form');
-            if (form) {
-                form.addEventListener('submit', function(e) {
-                    console.log('Form submitted!');
-                    console.log('Form data:', new FormData(form));
-                    // Removed alert to avoid interruption
-                });
-            }
-        });
-    </script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const form = document.querySelector('.app-form');
+        const passwordInput = document.getElementById('floatingInput');
+
+        if (form) {
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Verificar si la contraseña es "contraseñavencida"
+                if (passwordInput && passwordInput.value === 'contraseñavencida') {
+                    const modal = new bootstrap.Modal(document.getElementById('expiredPasswordModal'));
+                    modal.show();
+                    
+                    // Agregar evento para redireccionar cuando se cierre el modal
+                    document.getElementById('expiredPasswordModal').addEventListener('hidden.bs.modal', function () {
+                        window.location.href = "{{ route('password.change.expired.form') }}";
+                    });
+                } else {
+                    // Continuar con el envío normal del formulario
+                    form.submit();
+                }
+            });
+        }
+    });
+</script>
 
 </body>
 

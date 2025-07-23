@@ -27,8 +27,45 @@ Route::get('/forgot-password', function () {
 })->name('password.request');
 Route::post('/forgot-password', function () {
     // Simular envío de email de recuperación
-    return redirect()->back()->with('success', 'Si existe una cuenta con esa dirección de email, hemos enviado un enlace para restablecer la contraseña.');
+    return redirect()->back()->with('success', 'Código enviado al correo electrónico.');
 })->name('password.email');
+
+// Rutas para cambio de contraseña vencida
+Route::get('/change-expired-password', function () {
+    return view('change_expired_password');
+})->name('password.change.expired.form');
+
+Route::post('/change-expired-password', function () {
+    // Simular validación y cambio de contraseña
+    $currentPassword = request('current_password');
+    $newPassword = request('new_password');
+    $confirmPassword = request('new_password_confirmation');
+    
+    // Validaciones básicas
+    if (empty($currentPassword)) {
+        return redirect()->back()->with('error', 'Debe ingresar su contraseña actual.');
+    }
+    
+    if (empty($newPassword)) {
+        return redirect()->back()->with('error', 'Debe ingresar una nueva contraseña.');
+    }
+    
+    if (strlen($newPassword) < 6) {
+        return redirect()->back()->with('error', 'La nueva contraseña debe tener al menos 6 caracteres.');
+    }
+    
+    if ($newPassword !== $confirmPassword) {
+        return redirect()->back()->with('error', 'Las contraseñas no coinciden.');
+    }
+    
+    // Simular verificación de contraseña actual (en un caso real, verificaría contra la base de datos)
+    if ($currentPassword === 'contraseñavencida') {
+        // Simular cambio exitoso
+        return redirect()->back()->with('success', 'Contraseña actualizada exitosamente.');
+    } else {
+        return redirect()->back()->with('error', 'Su contraseña anterior no es la correcta. Reintente.');
+    }
+})->name('password.change.expired');
 
 
 // --- Rutas Protegidas (Dashboard y otras páginas) ---
