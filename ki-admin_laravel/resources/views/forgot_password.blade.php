@@ -165,31 +165,36 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        const form = document.querySelector('.app-form');
+        // --- DOM Elements ---
         const emailStep = document.getElementById('emailStep');
         const codeStep = document.getElementById('codeStep');
         const passwordStep = document.getElementById('passwordStep');
+        
         const emailInput = document.getElementById('email');
-        const successContainer = document.getElementById('successMessageContainer');
+        const codeInput = document.getElementById('code');
+        const newPasswordInput = document.getElementById('newPassword');
+        const confirmPasswordInput = document.getElementById('confirmPassword');
+
+        const messageContainer = document.getElementById('successMessageContainer');
         const messageAlert = document.getElementById('messageAlert');
-        const successText = document.getElementById('successMessageText');
-        const resendCodeLink = document.getElementById('resendCodeLink');
+        const messageText = document.getElementById('successMessageText');
+        
+        const submitEmailBtn = emailStep.querySelector('button');
         const verifyCodeBtn = document.getElementById('verifyCodeBtn');
+        const resendCodeLink = document.getElementById('resendCodeLink');
         const changePasswordBtn = document.getElementById('changePasswordBtn');
 
-        // Función para mostrar mensaje
+        // --- Utility Functions ---
         function showMessage(message, isError = false) {
-            if (successContainer && successText && messageAlert) {
-                successText.textContent = message;
+            if (messageContainer && messageText && messageAlert) {
+                messageText.textContent = message;
                 messageAlert.classList.remove('alert-success', 'alert-danger');
                 messageAlert.classList.add(isError ? 'alert-danger' : 'alert-success');
-                successContainer.style.display = 'block';
-                // Scroll al mensaje
-                successContainer.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                messageContainer.style.display = 'block';
+                messageContainer.scrollIntoView({ behavior: 'smooth', block: 'center' });
             }
         }
 
-        // Función para cambiar pasos
         function showStep(stepToShow) {
             emailStep.style.display = 'none';
             codeStep.style.display = 'none';
@@ -197,53 +202,106 @@
             stepToShow.style.display = 'block';
         }
 
-        // Paso 1: Envío de email y código
-        const submitButton = form.querySelector('button[type="submit"]');
-        if (submitButton) {
-            submitButton.addEventListener('click', function(e) {
+        // --- Step Logic Handlers ---
+        function handleEmailSubmit() {
+            if (!emailInput.value) return; // Do nothing if email is empty
+            
+            if (emailInput.value.toLowerCase() === 'error@example.com') {
+                showMessage("El correo electrónico ingresado no está asignado a un usuario", true);
+            } else {
+                showStep(codeStep);
+                showMessage("Código enviado al correo electrónico");
+            }
+        }
+
+        function handleCodeVerification() {
+            if (!codeInput.value) return;
+
+            if (codeInput.value === '1234') {
+                showStep(passwordStep);
+                showMessage("Código correcto");
+            } else {
+                showMessage("Código incorrecto. Intente de nuevo", true);
+            }
+        }
+        
+        // Paso 3: Cambiar Contraseña
+        function handleChangePassword() {
+            if (newPasswordInput.value && confirmPasswordInput.value) {
+                // Validación de formato de contraseña
+                const passwordRegex = /^(?=.*[A-Z])(?=.*\d).{8,}$/;
+                if (!passwordRegex.test(newPasswordInput.value)) {
+                    showMessage("La nueva contraseña debe ser de al menos 8 caracteres, incluyendo una mayúscula y un número", true);
+                    return;
+                }
+
+                if (newPasswordInput.value === confirmPasswordInput.value) {
+                    const successModal = new bootstrap.Modal(document.getElementById('successModal'));
+                    successModal.show();
+                } else {
+                    showMessage("Las contraseñas no coinciden", true);
+                }
+            }
+        }
+
+        // --- Event Listeners ---
+
+        // Step 1: Email
+        if (submitEmailBtn) {
+            submitEmailBtn.addEventListener('click', function(e) {
                 e.preventDefault();
-                if (emailInput.value) {
-                    showStep(codeStep);
-                    showMessage("Código enviado al correo electrónico");
+                handleEmailSubmit();
+            });
+        }
+        if (emailInput) {
+            emailInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    handleEmailSubmit();
                 }
             });
         }
 
-        // Reenvío de código
+        // Step 2: Code
+        if (verifyCodeBtn) {
+            verifyCodeBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                handleCodeVerification();
+            });
+        }
+        if (codeInput) {
+            codeInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    handleCodeVerification();
+                }
+            });
+        }
+
+        // Step 3: Password
+        if (changePasswordBtn) {
+            changePasswordBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                handleChangePassword();
+            });
+        }
+        const passwordFields = [newPasswordInput, confirmPasswordInput];
+        passwordFields.forEach(field => {
+            if (field) {
+                field.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter') {
+                        e.preventDefault();
+                        handleChangePassword();
+                    }
+                });
+            }
+        });
+        
+        // Resend Code
         if (resendCodeLink) {
             resendCodeLink.addEventListener('click', function(e) {
                 e.preventDefault();
                 showMessage("Código enviado al correo electrónico");
-            });
-        }
-
-        // Verificación de código
-        if (verifyCodeBtn) {
-            verifyCodeBtn.addEventListener('click', function(e) {
-                e.preventDefault();
-                const codeInput = document.getElementById('code');
-                if (codeInput && codeInput.value.length === 4) {
-                    showStep(passwordStep);
-                    showMessage("Código correcto");
-                }
-            });
-        }
-
-        // Cambio de contraseña
-        if (changePasswordBtn) {
-            changePasswordBtn.addEventListener('click', function(e) {
-                e.preventDefault();
-                const newPassword = document.getElementById('newPassword').value;
-                const confirmPassword = document.getElementById('confirmPassword').value;
-
-                if (newPassword && confirmPassword) {
-                    if (newPassword === confirmPassword) {
-                        const successModal = new bootstrap.Modal(document.getElementById('successModal'));
-                        successModal.show();
-                    } else {
-                        showMessage("Las contraseñas no coinciden", true);
-                    }
-                }
             });
         }
     });
